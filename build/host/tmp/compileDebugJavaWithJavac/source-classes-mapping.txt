@@ -1,0 +1,4 @@
+com/example/mascotas1/host/BuildConfig.java
+ com.example.mascotas1.host.BuildConfig
+com/example/mascotas1/host/MainActivity.java
+ com.example.mascotas1.host.MainActivity

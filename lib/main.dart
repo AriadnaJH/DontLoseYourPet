@@ -1,4 +1,4 @@
-// import 'package:aplicacion_libros1/Authenticator.dart';
+// import 'package:mascotas1/Authenticator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:mascotas1/authenticator_button.dart';

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "856067967304",
+    "project_id": "dont-lose-your-pet",
+    "storage_bucket": "dont-lose-your-pet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856067967304:android:1e1d2af8893eef857fcb7d",
+        "android_client_info": {
+          "package_name": "com.example.mascotas1.host"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856067967304-mfjgpvmle9sqmtrp39hv79r64smbm2ga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mascotas1.host",
+            "certificate_hash": "d476734dae02cbf9cff13677513275a10b3f2cf2"
+          }
+        },
+        {
+          "client_id": "856067967304-do5aocsq51valdab3jrbhrlu6t8lc6lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWpHdWTeRSmzJw1tpvjyib2QLb4XV5T1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856067967304-do5aocsq51valdab3jrbhrlu6t8lc6lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
