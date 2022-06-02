@@ -13,6 +13,7 @@ class GoogleAuthenticator extends StatelessWidget {
   Widget build(BuildContext context) {
     Firebase.initializeApp();
     return Scaffold(
+      backgroundColor: Color.fromARGB(161, 207, 236, 81),
       body: Center(
         child: MaterialButton(
           onPressed: () async {
@@ -20,7 +21,7 @@ class GoogleAuthenticator extends StatelessWidget {
             print(user?.displayName);
             Get.toNamed('/second');
           },
-          color: Colors.blue,
+          color: Color.fromARGB(255, 207, 236, 81),
           child: const Icon(FontAwesomeIcons.google),
           textColor: Colors.white,
         ),

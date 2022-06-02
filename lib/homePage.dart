@@ -1,46 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:mascotas1/pets.dart';
+import 'package:mascotas1/services.dart';
+import 'package:mascotas1/new_pet.dart';
 
-// void main() => runApp(MyApp());
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({Key? key}) : super(key: key);
 
-// class MyApp extends StatelessWidget {
 //   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Material App',
-//       home: MyHomePage(),
-//     );
-//   }
+//   State<MyHomePage> createState() => _MyHomePageState();
 // }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 188, 21, 21),
-          title: const Text("Alertas"),
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.vertical_align_center),
-            ),
-          ],
-        ),
-        drawer: const NavDrawer(),
-        body: const Center(
-          child: Text(
-            "Perro perdido",
-            style: TextStyle(fontSize: 30),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 207, 236, 81),
+        title: const Text("Alertas"),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.vertical_align_center),
           ),
-        ));
+        ],
+      ),
+      drawer: const NavDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const NewPet()));
+        },
+        backgroundColor: const Color.fromARGB(255, 207, 236, 81),
+        child: const Icon(Icons.add_outlined),
+      ),
+      body: FutureBuilder(
+        future: Services().getPets(),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          List myPets = snapshot.data ?? [];
+          return ListView(
+            children: [
+              for (Pets pet in myPets)
+                ListTile(
+                  title: Text(pet.name.toString()),
+                  subtitle: Text(pet.message.toString()),
+                ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -58,7 +68,7 @@ class NavDrawer extends StatelessWidget {
             accountEmail: Text("correo@ejemplo.com"),
             currentAccountPicture: FlutterLogo(),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 188, 21, 21),
+              color: Color.fromARGB(255, 207, 236, 81),
             ),
           ),
           ListTile(

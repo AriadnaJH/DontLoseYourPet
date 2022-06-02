@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   meta:
   firebase_core:
+  firebase_database:
   cloud_firestore:
   firebase_auth:
   font_awesome_flutter:
