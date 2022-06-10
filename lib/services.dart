@@ -1,31 +1,14 @@
-import 'dart:convert';
-
-import 'package:mascotas1/pets.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Services {
-  Future<List<Pets>> getPets() async {
-    List<Pets> myPets = [];
-
-    final snap = await FirebaseDatabase.instance.ref().child('pets').get();
-    if (snap.exists) {
-      print(snap.value);
-    }
-
-    return myPets;
-  }
-
-  Future<bool> savePets(String name, String message) async {
-    try {
-      await FirebaseDatabase.instance
-          .ref()
-          .child('pets')
-          .push()
-          .set({'nombre': name, 'mensaje': message});
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
+  CollectionReference Pets = FirebaseFirestore.instance.collection('Mascotas');
+  Future<bool> addPet(String name, String message) async {
+    await Pets.add({
+      'name': name,
+      'message': message,
+    })
+        .then((value) => print('Mascota añadida'))
+        .catchError((error) => print('Error al añadir la mascota: $error'));
+    return true;
   }
 }

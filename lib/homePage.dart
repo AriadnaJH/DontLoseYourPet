@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mascotas1/pets.dart';
-import 'package:mascotas1/services.dart';
 import 'package:mascotas1/new_pet.dart';
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
+final petsRef =
+    FirebaseFirestore.instance.collection('Mascotas').withConverter<Pets>(
+          fromFirestore: (snapshots, _) => Pets.fromJson(snapshots.data()!),
+          toFirestore: (pet, _) => pet.toJson(),
+        );
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 207, 236, 81),
+        backgroundColor: const Color.fromARGB(255, 180, 133, 63),
         title: const Text("Alertas"),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
@@ -32,21 +31,32 @@ class MyHomePage extends StatelessWidget {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => const NewPet()));
         },
-        backgroundColor: const Color.fromARGB(255, 207, 236, 81),
+        backgroundColor: const Color.fromARGB(255, 180, 133, 63),
         child: const Icon(Icons.add_outlined),
       ),
-      body: FutureBuilder(
-        future: Services().getPets(),
-        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          List myPets = snapshot.data ?? [];
-          return ListView(
-            children: [
-              for (Pets pet in myPets)
-                ListTile(
-                  title: Text(pet.name.toString()),
-                  subtitle: Text(pet.message.toString()),
-                ),
-            ],
+      body: StreamBuilder<QuerySnapshot<Pets>>(
+        stream: petsRef.snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final data = snapshot.requireData;
+
+          return ListView.builder(
+            itemCount: data.size,
+            itemBuilder: (context, index) {
+              return _PetsItem(
+                data.docs[index].data(),
+                data.docs[index].reference,
+              );
+            },
           );
         },
       ),
@@ -65,10 +75,10 @@ class NavDrawer extends StatelessWidget {
         children: const <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text("Ariadna Jimenez Hinojosa"),
-            accountEmail: Text("correo@ejemplo.com"),
+            accountEmail: Text("ariadna.jmnz.h@gmail.com"),
             currentAccountPicture: FlutterLogo(),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 207, 236, 81),
+              color: Color.fromARGB(255, 180, 133, 63),
             ),
           ),
           ListTile(
@@ -83,6 +93,52 @@ class NavDrawer extends StatelessWidget {
             leading: Icon(Icons.folder),
             title: Text("Mascota encontrada"),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PetsItem extends StatelessWidget {
+  _PetsItem(this.pet, this.reference);
+
+  final Pets pet;
+  final DocumentReference<Pets> reference;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.all(15),
+      elevation: 10,
+      color: const Color.fromARGB(255, 227, 210, 185),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            contentPadding: const EdgeInsets.fromLTRB(15, 10, 25, 0),
+            title: Text(
+              pet.name.toString(),
+              style: const TextStyle(color: Colors.black),
+            ),
+            subtitle: Text(
+              pet.message.toString(),
+              style: const TextStyle(color: Colors.black),
+            ),
+            leading: const Icon(Icons.pets),
+          ),
+          const Divider(color: Colors.black54, indent: 15, endIndent: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  ' ',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

@@ -1,4 +1,3 @@
-//import 'package:aplicacion_libros1/Libros.dart';
 import 'package:mascotas1/services.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +17,10 @@ class _NewPetState extends State<NewPet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 207, 236, 81),
+        backgroundColor: const Color.fromARGB(255, 180, 133, 63),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        //height: 300,
         color: Colors.white,
         child: Form(
             key: _formularioKey,
@@ -60,7 +58,7 @@ class _NewPetState extends State<NewPet> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formularioKey.currentState!.validate()) {
-                            bool respuesta = await Services().savePets(
+                            bool respuesta = await Services().addPet(
                               _nameController.text,
                               _messageController.text,
                             );
@@ -83,7 +81,7 @@ class _NewPetState extends State<NewPet> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 207, 236, 81),
+                          primary: const Color.fromARGB(255, 180, 133, 63),
                         ),
                         child: const Text('Aceptar'),
                       ),
@@ -93,7 +91,7 @@ class _NewPetState extends State<NewPet> {
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 207, 236, 81),
+                          primary: const Color.fromARGB(255, 180, 133, 63),
                         ),
                         child: const Text('Cancelar'),
                       ),
